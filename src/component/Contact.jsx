@@ -6,6 +6,7 @@ export default function Contact() {
 
   function getRegister(values) {
     console.log(values);
+  
   }
 
   const validationSchema= YUP.object({
@@ -15,6 +16,7 @@ userAge:YUP.number().min(18,'you must be over 18').required('you must enter your
 password:YUP.string().required('you must enter password').matches(/^[A-Z][a-z]{5,10}$/,'password must conatin......')
 
   })
+
 
   let formik = useFormik({
     initialValues: {
@@ -26,6 +28,7 @@ password:YUP.string().required('you must enter password').matches(/^[A-Z][a-z]{5
     validationSchema,
     onSubmit: getRegister
   })
+  console.log(formik);
   return (
     <section className='bg-white vh-100 d-flex align-items-center pt-5'>
       <div className="container text-center pt-5">
@@ -45,7 +48,7 @@ password:YUP.string().required('you must enter password').matches(/^[A-Z][a-z]{5
           {formik.errors.email && formik.touched.email ? <span className='alert alert-danger'>{formik.errors.email}</span> : ''}
           <input type="password" id='password' className='input border-bottom ps-2 rounded-3 my-4' placeholder='userPassword' value={formik.values.password} onChange={formik.handleChange} onBlur={formik.handleBlur} />
           {formik.errors.password && formik.touched.password ? <span className='alert alert-danger'>{formik.errors.password}</span> : ''}
-          <button type="submit" className='main-color border-0 text-white py-1 px-3 rounded-2 mt-2'>Send Message</button>
+          <button type="submit" disabled={!(formik.isValid && formik.dirty)} className='main-color border-0 text-white py-1 px-3 rounded-2 mt-2'>Send Message</button>
         </form>
       </div>
     </section>
